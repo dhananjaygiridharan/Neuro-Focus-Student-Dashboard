@@ -1,0 +1,14 @@
+# virtual environments
+neuro_env/
+venv/
+.venv/
+
+# python cache
+__pycache__/
+*.pyc
+
+# mac system junk
+.DS_Store
+
+# logs/data (optional depending on your setup)
+*.log
