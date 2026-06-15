@@ -1,88 +1,122 @@
-# Neuro-Focus
+# Neuro-Focus: Real-Time Study Fatigue & Attention Tracking
 
-A desktop **behavioral analytics platform** for students — a personal study operating system that uses real-time computer vision biomarkers (blink rate, blink duration) to support focus sessions, journaling, and weekly insights.
+## Overview
 
-Built with **PyQt6**, **OpenCV**, **MediaPipe**, and **NumPy**.
+Neuro-Focus is a desktop application that uses computer vision to monitor spontaneous eye blink behavior during study sessions. Using a webcam and facial landmark detection, the system tracks Eye Aspect Ratio (EAR), blink frequency, blink duration, and other behavioral metrics to estimate focus and fatigue in real time.
 
----
-
-## Product positioning
-
-Not a webcam demo. Neuro-Focus is a productivity platform (Notion / Forest / Opal inspired) where CV is one layer in a larger study system:
-
-- **Home** — today's progress, streak, insights, start focus
-- **Sessions** — structured session history
-- **Analytics** — weekly trends and subject comparisons
-- **Journal** — reflections and distraction logs
-- **Settings** — personalization
-
-Live camera tracking only appears inside an active **Focus Session** (after category selection + calibration).
+The project combines computer vision, signal processing, data logging, and desktop application development into a single productivity-focused tool.
 
 ---
 
-## Setup
+## Features
 
-```bash
-source ../neuro_env/bin/activate
-pip install -r requirements.txt
-
-curl -L -o face_landmarker.task \
-  "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task"
-
-python main.py
-```
-
-Run from repo root: `python neuro_focus/main.py`
+* Real-time webcam-based eye tracking
+* MediaPipe facial landmark detection
+* Eye Aspect Ratio (EAR) calculation
+* Adaptive user calibration
+* Blink detection using temporal state-machine logic
+* Real-time blinks-per-minute (BPM) tracking
+* Average blink duration tracking
+* Fatigue state classification
+* Study session management
+* Session data logging and storage
+* Desktop application built with PyQt6
 
 ---
 
-## Architecture
+## How It Works
 
-```
+1. MediaPipe Face Landmarker detects facial landmarks from a webcam feed.
+2. Eye landmarks are used to calculate Eye Aspect Ratio (EAR).
+3. A blink detection state machine identifies valid blinks while filtering noise.
+4. Blink frequency and duration metrics are tracked throughout a study session.
+5. Behavioral metrics are analyzed to estimate attention and fatigue states.
+6. Session data is saved for later review and analysis.
+
+---
+
+## Technologies Used
+
+* Python
+* OpenCV
+* MediaPipe
+* NumPy
+* Pandas
+* PyQt6
+
+---
+
+## Project Structure
+
+```text
 neuro_focus/
+│
 ├── main.py
+│
 ├── ui/
-│   ├── main_window.py       # Shell + bottom nav
-│   ├── home_view.py         # Home dashboard
-│   ├── focus_session.py     # Calibration + live tracking
-│   ├── sessions_view.py
-│   ├── analytics_view.py
-│   ├── journal_view.py
-│   ├── settings_view.py
-│   └── widgets/             # Camera, stat cards, nav
+│   ├── main_window.py
+│   ├── dashboard.py
+│   └── session_view.py
+│
 ├── engine/
 │   ├── tracker.py
 │   ├── calibration.py
 │   └── metrics.py
+│
 ├── session/
-│   ├── session_manager.py
-│   └── analytics.py
-└── data/
+│   └── session_manager.py
+│
+├── data/
+│   ├── raw/
+│   └── sessions.csv
+│
+├── assets/
+│
+├── face_landmarker.task
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## Metrics (defensible MVP)
+## Installation
 
-**Focus score** — starts at 100, penalized by:
-- fatigue events (blinks ≥ 0.4s)
-- BPM variability
-- blink-rate spikes
+Create and activate a virtual environment:
 
-**Fatigue score** — long-blink events per hour
+```bash
+python -m venv neuro_env
+source neuro_env/bin/activate
+```
 
-These are behavioral signals, not clinical neuroscience claims.
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the application:
+
+```bash
+python main.py
+```
 
 ---
 
-## Future features
+## What I Learned
 
-- Posture / neck angle tracking (shoulder landmarks + calibration)
-- macOS `.app` packaging
-- Session charts in Analytics
+Through this project I gained experience with:
+
+* Real-time computer vision pipelines
+* Facial landmark detection
+* Signal processing and behavioral metrics
+* State machine design
+* Data logging and session management
+* PyQt6 desktop application development
+* Git and GitHub workflows
+* Software architecture and project organization
 
 ---
 
-## Branch
+## Disclaimer
 
-`feature/neuro-focus-desktop-app`
+Neuro-Focus is an educational and experimental project. It is not intended to diagnose medical conditions or provide clinical assessments of attention, fatigue, or cognitive performance.
