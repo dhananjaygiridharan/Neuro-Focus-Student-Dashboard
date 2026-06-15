@@ -12,3 +12,11 @@ __pycache__/
 
 # logs/data (optional depending on your setup)
 *.log
+
+# session telemetry (keep structure, ignore generated data)
+neuro_focus/data/raw/*.csv
+neuro_focus/data/notes/*.json
+neuro_focus/data/journal/*.json
+
+# MediaPipe model (download via README instructions)
+neuro_focus/face_landmarker.task
